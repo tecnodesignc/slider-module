@@ -1,0 +1,17 @@
+{
+  "name": "Slider",
+  "alias": "slider",
+  "description": "Slider module for EncoreCMS",
+  "keywords": [],
+  "version": "1.0.0",
+  "active": 1,
+  "priority": 1,
+  "providers": [
+    "Modules\\Slider\\Providers\\RouteServiceProvider",
+    "Modules\\Slider\\Providers\\SliderServiceProvider"
+  ],
+  "aliases": {
+    "Slider": "Modules\\Slider\\Facades\\SliderFacade"
+  },
+  "files": []
+}

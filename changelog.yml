@@ -1,0 +1,5 @@
+url: https://github.com/becquerel/encore-slider-module
+versions:
+    "1.0.0":
+      added:
+        - Initial Version

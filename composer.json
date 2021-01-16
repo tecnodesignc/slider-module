@@ -1,0 +1,45 @@
+{
+  "name": "tecnodesignc/slider-module",
+  "type": "encore-module",
+  "description": "Slider module for EncoreCMS",
+  "keywords": [
+    "encorecms",
+    "slider",
+    "carrousel"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marcos Rativa",
+      "email": "marcos21.009@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "support@tecnodesign.com.co",
+    "issues": "https://github.com/tecnodeisgignc/slider-module/issues",
+    "source": "https://github.com/tecnodeisgignc/slider-module"
+  },
+  "require": {
+    "php": ">=7.1.0",
+    "composer/installers": "~1.0",
+    "tecnodeisgignc/core-module": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.0",
+    "orchestra/testbench": "3.5.*"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Modules\\Slider\\": ".",
+      "Modules\\": "Modules/"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\Slider\\": ""
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
