@@ -1,4 +1,5 @@
-<?php namespace Modules\Slider\Repositories\Cache;
+<?php
+namespace Modules\Slider\Repositories\Cache;
 
 use Modules\Core\Repositories\Cache\BaseCacheDecorator;
 use Modules\Slider\Repositories\SlideRepository;

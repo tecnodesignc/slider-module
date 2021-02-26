@@ -1,6 +1,6 @@
 <?php namespace Modules\Slider\Entities;
 
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Media\Support\Traits\MediaRelation;
 use Illuminate\Support\Facades\URL;

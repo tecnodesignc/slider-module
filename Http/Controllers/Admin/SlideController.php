@@ -1,4 +1,6 @@
-<?php namespace Modules\Slider\Http\Controllers\Admin;
+<?php
+
+namespace Modules\Slider\Http\Controllers\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Laracasts\Flash\Flash;

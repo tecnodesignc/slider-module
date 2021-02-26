@@ -9,4 +9,10 @@ interface SliderRepository extends BaseRepository
      * @return object
      */
     public function allOnline();
+
+    /**
+     * @param string $systemName
+     * @return Object
+     */
+    public function findBySystemName(string $systemName);
 }

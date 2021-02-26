@@ -5,6 +5,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Array of middleware that will be applied on the page module front end routes
+    |--------------------------------------------------------------------------
+    */
+    'middleware' => [],
+    /*
+    |--------------------------------------------------------------------------
     | Load additional view namespaces for a module
     |--------------------------------------------------------------------------
     | You can specify place from which you would like to use module views.

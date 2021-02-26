@@ -2,7 +2,11 @@
   "name": "Slider",
   "alias": "slider",
   "description": "Slider module for EncoreCMS",
-  "keywords": [],
+  "keywords": [
+    "Slider",
+    "EncoreCMS",
+    "Slides"
+  ],
   "version": "1.0.0",
   "active": 1,
   "priority": 1,

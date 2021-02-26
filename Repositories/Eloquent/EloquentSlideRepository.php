@@ -1,4 +1,6 @@
-<?php namespace Modules\Slider\Repositories\Eloquent;
+<?php
+
+namespace Modules\Slider\Repositories\Eloquent;
 
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 use Modules\Slider\Repositories\SlideRepository;

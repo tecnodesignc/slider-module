@@ -1,4 +1,6 @@
-<?php namespace Modules\Slider\Http\Controllers\Admin;
+<?php
+
+namespace Modules\Slider\Http\Controllers\Admin;
 
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 use Modules\Slider\Entities\Slider;

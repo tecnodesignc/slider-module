@@ -1,8 +1,10 @@
 @if(count($slider->slides) > 1)
-    <a class="carousel-control carousel-control-prev" href="#{{$slider->system_name}}" role="button" data-slide="prev">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
+    <a class="left carousel-control" href="#{{ $slider->system_name }}" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">{{ trans('slider::frontend.previous') }}</span>
     </a>
-    <a class="carousel-control carousel-control-next" href="#{{$slider->system_name}}" role="button" data-slide="next">
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
+    <a class="right carousel-control" href="#{{ $slider->system_name }}" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">{{ trans('slider::frontend.next') }}</span>
     </a>
 @endif

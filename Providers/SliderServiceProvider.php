@@ -1,4 +1,6 @@
-<?php namespace Modules\Slider\Providers;
+<?php
+
+namespace Modules\Slider\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
