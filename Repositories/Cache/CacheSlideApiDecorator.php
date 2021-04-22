@@ -1,11 +1,9 @@
-<?php
-
-namespace Modules\Slider\Repositories\Cache;
+<?php namespace Modules\Slider\Repositories\Cache;
 
 use Modules\Core\Repositories\Cache\BaseCacheDecorator;
-use Modules\Slider\Repositories\SliderRepository;
+use Modules\Slider\Repositories\SlideApiRepository;
 
-class CacheSliderDecorator extends BaseCacheDecorator implements SliderRepository
+class CacheSlideApiDecorator extends BaseCacheDecorator implements SlideApiRepository
 {
     /**
      * @var SliderRepository
@@ -34,10 +32,17 @@ class CacheSliderDecorator extends BaseCacheDecorator implements SliderRepositor
             );
     }
 
-    public function findBySystemName(string $systemName)
+    public function index($page, $take, $filter, $include)
     {
-        return $this->remember(function () use ($systemName) {
-            return $this->repository->findBySystemName($systemName);
+        return $this->remember(function () use ($page, $take, $filter, $include) {
+            return $this->repository->index($page, $take, $filter, $include);
+        });
+    }
+
+    public function show($id, $include)
+    {
+        return $this->remember(function () use ($id, $include) {
+            return $this->repository->show($id, $include);
         });
     }
 }
