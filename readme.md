@@ -1,8 +1,5 @@
 # Slider Module
 
-## Special Thanks
-to Nicolas Widart for EncoreCMS and his Menu Module, that was used as a foundation for the Slider Module.
-
 ## Installation
 You can install Slider module using composer:
 `composer require tecnodesignc/slider-module`
@@ -33,7 +30,7 @@ name as a second parameter to the `render()` method, i.e.
 
 Template may look like this:
 ```php
-{-- Themes/MyTheme/views/slider/my-own-slider.blade.php --}
+{-- themes/MyTheme/views/slider/my-own-slider.blade.php --}
 <div id="{{ $slider->system_name }}" class="my-own-slider-class">
 
     @foreach($slider->slides as $index => $slide)
