@@ -20,5 +20,5 @@
     "Slider": "Modules\\Slider\\Facades\\SliderFacade"
   },
   "files": [],
-  "minimumCoreVersion": "2.0",
+  "minimumCoreVersion": "2.0"
 }
