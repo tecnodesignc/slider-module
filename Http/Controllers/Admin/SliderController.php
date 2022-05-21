@@ -2,6 +2,11 @@
 
 namespace Modules\Slider\Http\Controllers\Admin;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 use Modules\Slider\Entities\Slider;
 use Modules\Slider\Http\Requests\CreateSliderRequest;
@@ -15,17 +20,17 @@ class SliderController extends AdminBaseController
     /**
      * @var SliderRepository
      */
-    private $slider;
+    private SliderRepository $slider;
 
     /**
      * @var SlideRepository
      */
-    private $slide;
+    private SlideRepository $slide;
 
     /**
      * @var SliderRenderer
      */
-    private $sliderRenderer;
+    private SliderRenderer $sliderRenderer;
 
     public function __construct(
         SliderRepository $slider,
@@ -39,7 +44,7 @@ class SliderController extends AdminBaseController
         $this->sliderRenderer = $sliderRenderer;
     }
 
-    public function index()
+    public function index(): Factory|View|Application
     {
         $sliders = $this->slider->all();
 
@@ -49,19 +54,19 @@ class SliderController extends AdminBaseController
             ]);
     }
 
-    public function create()
+    public function create(): Factory|View|Application
     {
         return view('slider::admin.sliders.create');
     }
 
-    public function store(CreateSliderRequest $request)
+    public function store(CreateSliderRequest $request): Redirector|RedirectResponse
     {
         $this->slider->create($request->all());
 
         return redirect()->route('admin.slider.slider.index')->withSuccess(trans('slider::messages.slider created'));
     }
 
-    public function edit(Slider $slider)
+    public function edit(Slider $slider): Factory|View|Application
     {
         $slides = $slider->slides;
         $sliderStructure = $this->sliderRenderer->renderForSlider($slider, $slides);
@@ -74,14 +79,14 @@ class SliderController extends AdminBaseController
 
     }
 
-    public function update(Slider $slider, UpdateSliderRequest $request)
+    public function update(Slider $slider, UpdateSliderRequest $request): Redirector|RedirectResponse
     {
         $this->slider->update($slider, $request->all());
 
         return redirect()->route('admin.slider.slider.index')->withSuccess(trans('slider::messages.slider updated'));
     }
 
-    public function destroy(Slider $slider)
+    public function destroy(Slider $slider): Redirector|RedirectResponse
     {
         $this->slider->destroy($slider);
 

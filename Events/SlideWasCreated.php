@@ -2,6 +2,7 @@
 
 namespace Modules\Slider\Events;
 
+use Illuminate\Database\Eloquent\Model;
 use Modules\Media\Contracts\StoringMedia;
 
 class SlideWasCreated implements StoringMedia
@@ -10,28 +11,28 @@ class SlideWasCreated implements StoringMedia
     /**
      * @var array
      */
-    public $data;
+    public array $data;
 
     /**
-     * @var Post
+     * @var Model
      */
-    public $post;
+    public Model $slide;
 
 
-    public function __construct($post, array $data)
+    public function __construct($slide, array $data)
     {
         $this->data = $data;
-        $this->post = $post;
+        $this->slide = $slide;
     }
 
 
     /**
      * Return the entity
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
-    public function getEntity()
+    public function getEntity(): Model
     {
-        return $this->post;
+        return $this->slide;
     }
 
 
@@ -39,7 +40,7 @@ class SlideWasCreated implements StoringMedia
      * Return the ALL data sent
      * @return array
      */
-    public function getSubmissionData()
+    public function getSubmissionData(): array
     {
         return $this->data;
     }

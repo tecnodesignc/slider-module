@@ -8,5 +8,5 @@ interface SliderPresenterInterface
      * @param string $sliderName
      * @return string rendered slider
      */
-    public function render($sliderName);
+    public function render(string $sliderName): string;
 }

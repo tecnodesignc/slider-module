@@ -15,11 +15,11 @@ class SliderPresenter extends AbstractSliderPresenter implements SliderPresenter
      * @param string $template blade template to render slider
      * @return string rendered slider HTML
      */
-    public function render($slider, $template = 'slider::frontend.bootstrap.slider', $options=array())
+    public function render($slider, string $template = 'slider::frontend.bootstrap.slider', $options=array()): string
     {
         if (!$slider instanceof Slider) {
             $slider = $this->getSliderFromRepository($slider);
-            if ($slider && $slider->active == false) {    // inactive slider must not render
+            if ($slider && !$slider->active) {    // inactive slider must not render
                 return '';
             }
         }
@@ -39,9 +39,9 @@ class SliderPresenter extends AbstractSliderPresenter implements SliderPresenter
 
     /**
      * @param $systemName
-     * @return Slider
+     * @return Slider|Object
      */
-    private function getSliderFromRepository($systemName)
+    private function getSliderFromRepository($systemName): Slider
     {
         return $this->sliderRepository->findBySystemName($systemName);
     }

@@ -2,7 +2,12 @@
 
 namespace Modules\Slider\Http\Controllers\Admin;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Laracasts\Flash\Flash;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 use Modules\Slider\Entities\Slider;
@@ -18,17 +23,17 @@ class SlideController extends AdminBaseController
     /**
      * @var SlideRepository
      */
-    private $slide;
+    private SlideRepository $slide;
 
     /**
      * @var PageRepository
      */
-    private $page;
+    private PageRepository $page;
 
     /**
      * @var FileRepository
      */
-    private $file;
+    private FileRepository $file;
 
     public function __construct(SlideRepository $slide, PageRepository $page, FileRepository $file)
     {
@@ -38,7 +43,7 @@ class SlideController extends AdminBaseController
         $this->file = $file;
     }
 
-    public function create(Slider $slider)
+    public function create(Slider $slider): Factory|View|Application
     {
         $pages = $this->page->all();
 
@@ -49,7 +54,7 @@ class SlideController extends AdminBaseController
             ]);
     }
 
-    public function store(Slider $slider, CreateSlideRequest $request)
+    public function store(Slider $slider, CreateSlideRequest $request): Redirector|RedirectResponse
     {
         $this->slide->create($this->addSliderId($slider, $request));
 
@@ -58,7 +63,7 @@ class SlideController extends AdminBaseController
             ->withSuccess(trans('slider::messages.slide created'));
     }
 
-    public function edit(Slider $slider, Slide $slide)
+    public function edit(Slider $slider, Slide $slide): Factory|View|Application
     {
         $pages = $this->page->all();
 
@@ -71,7 +76,7 @@ class SlideController extends AdminBaseController
             ]);
     }
 
-    public function update(Slider $slider, Slide $slide, UpdateSlideRequest $request)
+    public function update(Slider $slider, Slide $slide, UpdateSlideRequest $request): Redirector|RedirectResponse
     {
         $this->slide->update($slide, $this->addSliderId($slider, $request));
 
@@ -81,11 +86,11 @@ class SlideController extends AdminBaseController
     }
 
     /**
-     * @param  Slider $slider
-     * @param  \Illuminate\Foundation\Http\FormRequest $request
+     * @param Slider $slider
+     * @param FormRequest $request
      * @return array
      */
-    private function addSliderId(Slider $slider, FormRequest $request)
+    private function addSliderId(Slider $slider, FormRequest $request): array
     {
         return array_merge($request->all(), ['slider_id' => $slider->id]);
     }

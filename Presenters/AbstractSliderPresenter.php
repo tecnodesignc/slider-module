@@ -10,7 +10,7 @@ abstract class AbstractSliderPresenter implements SliderPresenterInterface
     /**
      * @var SliderRepository
      */
-    protected $sliderRepository;
+    protected SliderRepository $sliderRepository;
 
     /**
      * SliderPresenter constructor.

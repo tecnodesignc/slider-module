@@ -1,13 +1,15 @@
 {
   "name": "Slider",
   "alias": "slider",
+  "title": "Slider",
+  "author": "Marcos Rativa",
   "description": "Slider module for EncoreCMS",
   "keywords": [
     "Slider",
     "EncoreCMS",
     "Slides"
   ],
-  "version": "1.0.0",
+  "version": "2.0.0",
   "active": 1,
   "priority": 1,
   "providers": [
@@ -17,5 +19,6 @@
   "aliases": {
     "Slider": "Modules\\Slider\\Facades\\SliderFacade"
   },
-  "files": []
+  "files": [],
+  "minimumCoreVersion": "2.0",
 }

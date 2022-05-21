@@ -2,6 +2,7 @@
 
 namespace Modules\Slider\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Slider\Repositories\SlideApiRepository;
 use Modules\Slider\Transformers\SliderApiTransformer;
@@ -10,19 +11,21 @@ use Modules\Ihelpers\Http\Controllers\Api\BaseApiController;
 class SlideApiController extends BaseApiController
 {
 
-  private $slideApi;
+  private SlideApiRepository $slideApi;
 
   public function __construct(SlideApiRepository $sliderApi)
   {
     $this->slideApi = $sliderApi;
   }
 
-  /**
-   * Get slide by parameters
-   *
-   * @param Request $request
-   */
-  public function index(Request $request){
+    /**
+     * Get slide by parameters
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+  public function index(Request $request): JsonResponse
+  {
     try {
       //Get Parameters from URL.
       $p = $this->parametersUrl(false, false, false, []);
@@ -46,10 +49,12 @@ class SlideApiController extends BaseApiController
     return response()->json($response, $status ?? 200);
   }
 
-  /**
-   * Show slide by id
-   */
-  public function show($id)
+    /**
+     * Show slide by id
+     * @param  $id
+     * @return JsonResponse
+     */
+  public function show($id): JsonResponse
   {
     try {
       //Get Parameters from URL.

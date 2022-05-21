@@ -2,6 +2,7 @@
 namespace Modules\Slider\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Slider extends Model
 {
@@ -13,7 +14,10 @@ class Slider extends Model
 
     protected $table = 'slider__sliders';
 
-    public function slides()
+    /**
+     * @return HasMany
+     */
+    public function slides(): HasMany
     {
         return $this->hasMany(Slide::class)->orderBy('position', 'asc');
     }

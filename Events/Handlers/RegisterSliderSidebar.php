@@ -1,35 +1,22 @@
-<?php namespace Modules\Slider\Sidebar;
+<?php
+
+namespace Modules\Slider\Events\Handlers;
 
 use Maatwebsite\Sidebar\Badge;
 use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
-use Modules\User\Contracts\Authentication;
+use Modules\Core\Sidebar\AbstractAdminSidebar;
 use Modules\Slider\Repositories\SliderRepository;
 
-class SidebarExtender implements \Maatwebsite\Sidebar\SidebarExtender
+class RegisterSliderSidebar extends AbstractAdminSidebar
 {
     /**
-     * @var Authentication
-     */
-    protected $auth;
-
-    /**
-     * @param Authentication $auth
-     *
-     * @internal param Guard $guard
-     */
-    public function __construct(Authentication $auth)
-    {
-        $this->auth = $auth;
-    }
-
-    /**
+     * Method used to define your sidebar menu groups and items
      * @param Menu $menu
-     *
      * @return Menu
      */
-    public function extendWith(Menu $menu)
+    public function extendWith(Menu $menu): Menu
     {
         $menu->group(trans('core::sidebar.content'), function (Group $group) {
             $group->item(trans('slider::slider.title'), function (Item $item) {

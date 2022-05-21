@@ -1,6 +1,8 @@
 <?php namespace Modules\Slider\Repositories\Eloquent;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 use Modules\Slider\Entities\Slider;
@@ -8,7 +10,8 @@ use Modules\Slider\Repositories\SlideApiRepository;
 
 class EloquentSlideApiRepository extends EloquentBaseRepository implements SlideApiRepository
 {
-  public function index ($page, $take, $filter, $include){
+  public function index ($page, $take, $filter, $include): Collection|LengthAwarePaginator|array
+  {
     //Initialize Query
     $query = $this->model->query();
 
@@ -37,7 +40,8 @@ class EloquentSlideApiRepository extends EloquentBaseRepository implements Slide
     }
   }
 
-  public function show($id,$include){
+  public function show($id,$include): Collection|array
+  {
     //Initialize Query
     $query = $this->model->query();
 

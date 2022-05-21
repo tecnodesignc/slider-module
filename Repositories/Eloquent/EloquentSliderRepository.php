@@ -3,6 +3,8 @@
 namespace Modules\Slider\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 use Modules\Slider\Entities\Slider;
@@ -10,34 +12,45 @@ use Modules\Slider\Repositories\SliderRepository;
 
 class EloquentSliderRepository extends EloquentBaseRepository implements SliderRepository
 {
-    public function create($data)
+
+    /**
+     * Create a resource
+     * @param  $data
+     * @return Model|Collection|Builder|array|null
+     */
+    public function create($data): Model|Collection|Builder|array|null
     {
         $slider = $this->model->create($data);
 
         return $slider;
     }
-
-    public function update($slider, $data)
+    /**
+     * Update a resource
+     * @param  $model
+     * @param array $data
+     * @return Model|Collection|Builder|array|null
+     */
+    public function update($model, array $data): Model|Collection|Builder|array|null
     {
-        $slider->update($data);
+        $model->update($data);
 
-        return $slider;
+        return $model;
     }
 
     /**
      * Count all records
      * @return int
      */
-    public function countAll()
+    public function countAll(): int
     {
         return $this->model->count();
     }
 
     /**
      * Get all available sliders
-     * @return object
+     * @return Collection
      */
-    public function allOnline()
+    public function allOnline(): Collection
     {
         return $this->model->where('active', '=', true)
             ->orderBy('created_at', 'DESC')
@@ -47,9 +60,9 @@ class EloquentSliderRepository extends EloquentBaseRepository implements SliderR
 
     /**
      * @param string $systemName
-     * @return Slider
+     * @return Model|Collection|Builder|array|null
      */
-    public function findBySystemName(string $systemName)
+    public function findBySystemName(string $systemName):Model|Collection|Builder|array|null
     {
         return $this->model->where('system_name', '=', $systemName)->first();
     }

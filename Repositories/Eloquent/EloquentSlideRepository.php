@@ -2,6 +2,10 @@
 
 namespace Modules\Slider\Repositories\Eloquent;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 use Modules\Slider\Repositories\SlideRepository;
 use Modules\Slider\Events\SlideWasCreated;
@@ -11,12 +15,11 @@ class EloquentSlideRepository extends EloquentBaseRepository implements SlideRep
 
     /**
      * Override for add the event on create and link media file
-     *
-     * @param mixed $data Data from POST request form
-     *
-     * @return object The created entity
+     * @param $data
+     * Data from POST request form
+     * @return Model|Collection|Builder|array|null The created entity
      */
-    public function create($data)
+    public function create($data): Model|Collection|Builder|array|null
     {
         $slide = parent::create($data);
 
@@ -24,19 +27,25 @@ class EloquentSlideRepository extends EloquentBaseRepository implements SlideRep
 
         return $slide;
     }
-
-    public function update($sliderItem, $data)
-    {
-        $sliderItem->update($data);
-
-        return $sliderItem;
-    }
     /**
-     * Standard Api Method
-     * @param bool $params
-     * @return mixed
+     * Update a resource
+     * @param  $model
+     * @param array $data
+     * @return Model|Collection|Builder|array|null
      */
-    public function getItemsBy($params = false)
+    public function update($model, array $data): Model|Collection|Builder|array|null
+    {
+        $model->update($data);
+
+        return $model;
+    }
+
+    /**
+     * Get resources by an array of attributes
+     * @param bool|object $params
+     * @return LengthAwarePaginator|Collection
+     */
+    public function getItemsBy(bool|object $params = false): Collection|LengthAwarePaginator
     {
         /*== initialize query ==*/
         $query = $this->model->query();
@@ -108,12 +117,12 @@ class EloquentSlideRepository extends EloquentBaseRepository implements SlideRep
     }
 
     /**
-     * Standard Api Method
-     * @param $criteria
-     * @param bool $params
-     * @return mixed
+     * Get resources by an array of attributes
+     * @param string $criteria
+     * @param bool|object $params
+     * @return Model|Collection|Builder|array|null
      */
-    public function getItem($criteria, $params = false)
+    public function getItem(string $criteria, $params = false): Model|Collection|Builder|array|null
     {
         //Initialize query
         $query = $this->model->query();

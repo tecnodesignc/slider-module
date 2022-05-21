@@ -1,5 +1,8 @@
-url: https://github.com/becquerel/encore-slider-module
+url: https://github.com/tecnodesignc/slider-module
 versions:
-    "1.0.0":
-      added:
-        - Initial Version
+  "2.0.0":
+    changed:
+      - Laravel 9 compatibility
+  "1.0.0":
+    added:
+      - Initial Version

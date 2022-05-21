@@ -3,6 +3,7 @@
 namespace Modules\Slider\Http\Controllers\Api;
 
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
@@ -15,15 +16,15 @@ class SliderApiController extends Controller
   /**
    * @var Repository
    */
-  private $cache;
+  private Repository $cache;
   /**
    * @var SlideOrderer
    */
-  private $slideOrderer;
+  private SlideOrderer $slideOrderer;
   /**
-   * @var SlideRepository
+   * @var SliderRepository
    */
-  private $slider;
+  private SliderRepository $slider;
 
   public function __construct(SlideOrderer $slideOrderer, Repository $cache, SliderRepository $slider)
   {
@@ -35,7 +36,7 @@ class SliderApiController extends Controller
   /**
    * Show slide by id
    */
-  public function show($id)
+  public function show($id): JsonResponse
   {
     try {
       //Request to Repository

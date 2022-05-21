@@ -7,26 +7,26 @@ class SliderRenderer
     /**
      * @var int Id of the slider to render
      */
-    protected $sliderId;
+    protected int $sliderId;
     /**
      * @var string
      */
-    private $startTag = '<div class="dd">';
+    private string $startTag = '<div class="dd">';
     /**
      * @var string
      */
-    private $endTag = '</div>';
+    private string $endTag = '</div>';
     /**
      * @var string
      */
-    private $slides = '';
+    private string $slides = '';
 
     /**
      * @param Slider $slider
      * @param $slides
      * @return string
      */
-    public function renderForSlider($slider, $slides)
+    public function renderForSlider(Slider $slider, $slides): string
     {
         $this->sliderId = $slider->id;
 
@@ -41,7 +41,7 @@ class SliderRenderer
      * Generate the html for the given items
      * @param $slides
      */
-    private function generateHtmlFor($slides)
+    private function generateHtmlFor($slides): void
     {
         $this->slides .= '<ol class="dd-list">';
         foreach ($slides as $slide) {

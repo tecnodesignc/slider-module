@@ -2,11 +2,16 @@
 
 namespace Modules\Slider\Providers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Modules\Core\Events\BuildingSidebar;
+use Modules\Core\Events\LoadingBackendTranslations;
 use Modules\Slider\Entities\Slider;
 use Modules\Slider\Entities\Slide;
+use Modules\Slider\Events\Handlers\RegisterSliderSidebar;
 use Modules\Slider\Presenters\SliderPresenter;
+use Modules\Slider\Repositories\Cache\CacheSlideApiDecorator;
 use Modules\Slider\Repositories\Cache\CacheSliderDecorator;
 use Modules\Slider\Repositories\Cache\CacheSlideDecorator;
 use Modules\Slider\Repositories\Eloquent\EloquentSlideApiRepository;
@@ -33,6 +38,22 @@ class SliderServiceProvider extends ServiceProvider
   public function register()
   {
     $this->registerBindings();
+
+      $this->app['events']->listen(
+          BuildingSidebar::class,
+          $this->getSidebarClassForModule('slider', RegisterSliderSidebar::class)
+      );
+
+      $this->app['events']->listen(LoadingBackendTranslations::class, function (LoadingBackendTranslations $event) {
+          $event->load('frontend', Arr::dot(trans('slider::frontend')));
+          $event->load('messages', Arr::dot(trans('slider::messages')));
+          $event->load('slider', Arr::dot(trans('slider::slider')));
+          $event->load('slides', Arr::dot(trans('slider::slides')));
+          $event->load('validation', Arr::dot(trans('slider::validation')));
+          // append translations
+
+      });
+
   }
 
   /**

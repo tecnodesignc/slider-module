@@ -2,11 +2,15 @@
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Media\Support\Traits\MediaRelation;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\App;
 use Modules\Page\Entities\Page;
 
+/**
+ *
+ */
 class Slide extends Model
 {
     use Translatable, MediaRelation;
@@ -38,31 +42,35 @@ class Slide extends Model
     /**
      * @var string
      */
-    private $linkUrl;
+    private string $linkUrl;
 
     /**
      * @var string
      */
-    private $imageUrl;
+    private string $imageUrl;
 
-    public function slider()
+    /**
+     * @return BelongsTo
+     */
+    public function slider(): BelongsTo
     {
         return $this->belongsTo(Slider::class);
     }
 
     /**
      * Check if page_id is empty and returning null instead empty string
-     * @return number
+     * @param $value
+     * @return void
      */
-    public function setPageIdAttribute($value)
+    public function setPageIdAttribute($value): void
     {
         $this->attributes['page_id'] = !empty($value) ? $value : null;
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function page()
+    public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
     }
@@ -71,7 +79,7 @@ class Slide extends Model
      * returns slider image src
      * @return string|null full image path if image exists or null if no image is set
      */
-    public function getImageUrl()
+    public function getImageUrl(): ?string
     {
         if($this->imageUrl === null) {
             if (!empty($this->external_image_url)) {
@@ -89,7 +97,7 @@ class Slide extends Model
      * returns slider link URL
      * @return string|null
      */
-    public function getLinkUrl()
+    public function getLinkUrl(): ?string
     {
         if ($this->linkUrl === null) {
             if (!empty($this->url)) {

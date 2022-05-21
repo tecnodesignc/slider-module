@@ -3,6 +3,7 @@
 namespace Modules\Slider\Http\Controllers\Api;
 
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
@@ -14,15 +15,15 @@ class SlideController extends Controller
     /**
      * @var Repository
      */
-    private $cache;
+    private Repository $cache;
     /**
      * @var SlideOrderer
      */
-    private $slideOrderer;
+    private SlideOrderer $slideOrderer;
     /**
      * @var SlideRepository
      */
-    private $slide;
+    private SlideRepository $slide;
 
     public function __construct(SlideOrderer $slideOrderer, Repository $cache, SlideRepository $slide)
     {
@@ -45,9 +46,9 @@ class SlideController extends Controller
     /**
      * Delete a slide
      * @param Request $request
-     * @return mixed
+     * @return JsonResponse
      */
-    public function delete(Request $request)
+    public function delete(Request $request): JsonResponse
     {
         $slide = $this->slide->find($request->get('slide'));
 
