@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Events\LoadingBackendTranslations;
+use Modules\Core\Traits\CanGetSidebarClassForModule;
 use Modules\Slider\Entities\Slider;
 use Modules\Slider\Entities\Slide;
 use Modules\Slider\Events\Handlers\RegisterSliderSidebar;
@@ -21,7 +22,7 @@ use Modules\Core\Traits\CanPublishConfiguration;
 
 class SliderServiceProvider extends ServiceProvider
 {
-  use CanPublishConfiguration;
+  use CanPublishConfiguration, CanGetSidebarClassForModule ;
 
   /**
    * Indicates if loading of the provider is deferred.
