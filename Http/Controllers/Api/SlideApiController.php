@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Slider\Repositories\SlideApiRepository;
 use Modules\Slider\Transformers\SliderApiTransformer;
-use Modules\Ihelpers\Http\Controllers\Api\BaseApiController;
+use Modules\Core\Http\Controllers\Api\BaseApiController;
 
 class SlideApiController extends BaseApiController
 {
