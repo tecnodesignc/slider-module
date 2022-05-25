@@ -40,14 +40,14 @@ class Slide extends Model
     protected $table = 'slider__slides';
 
     /**
-     * @var string
+     * @var ?string
      */
-    private string $linkUrl;
+    private ?string $linkUrl=null;
 
     /**
      * @var ?string
      */
-    private ?string $imageUrl;
+    private ?string $imageUrl=null;
 
     /**
      * @return BelongsTo
