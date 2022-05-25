@@ -1,6 +1,7 @@
 <?php namespace Modules\Slider\Services;
 
 use Illuminate\Support\Facades\URL;
+use Modules\Slider\Entities\Slider;
 
 class SliderRenderer
 {
