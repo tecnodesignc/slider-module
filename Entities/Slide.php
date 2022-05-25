@@ -45,9 +45,9 @@ class Slide extends Model
     private string $linkUrl;
 
     /**
-     * @var string
+     * @var ?string
      */
-    private string $imageUrl;
+    private ?string $imageUrl;
 
     /**
      * @return BelongsTo
