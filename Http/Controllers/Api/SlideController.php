@@ -38,7 +38,7 @@ class SlideController extends Controller
      */
     public function update(Request $request)
     {
-        $this->cache->tags('slides')->flush();
+        $this->cache->flush();
 
         $this->slideOrderer->handle($request->get('slider'));
     }
