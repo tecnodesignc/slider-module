@@ -2,80 +2,171 @@
 
 namespace Modules\Slider\Http\Controllers\Api;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\Slider\Repositories\SlideApiRepository;
-use Modules\Slider\Transformers\SliderApiTransformer;
+use Illuminate\Http\JsonResponse;
+use Mockery\CountValidator\Exception;
+use Modules\Slider\Entities\Slide;
+use Modules\Slider\Http\Requests\CreateSlideRequest;
+use Modules\Slider\Http\Requests\UpdateSlideRequest;
+use Modules\Slider\Repositories\SlideRepository;
+use Modules\Slider\Transformers\SlideTransformer;
 use Modules\Core\Http\Controllers\Api\BaseApiController;
+use Modules\User\Contracts\Authentication;
 
 class SlideApiController extends BaseApiController
 {
-
-  private SlideApiRepository $slideApi;
-
-  public function __construct(SlideApiRepository $sliderApi)
-  {
-    $this->slideApi = $sliderApi;
-  }
-
     /**
-     * Get slide by parameters
-     *
-     * @param Request $request
-     * @return JsonResponse
+     * @var SlideRepository
      */
-  public function index(Request $request): JsonResponse
-  {
-    try {
-      //Get Parameters from URL.
-      $p = $this->parametersUrl(false, false, false, []);
+    private SlideRepository $slide;
 
-      //Request to Repository
-      $slides = $this->slideApi->index($p->page, $p->take, $p->filter, $p->include);
+    public function __construct(SlideRepository $slide)
+    {
+        parent::__construct();
 
-      //Response
-      $response = ["data" => SliderApiTransformer::collection($slides)];
-
-      //If request pagination add meta-page
-      $p->page ? $response["meta"] = ["page" => $this->pageTransformer($slides)] : false;
-    } catch (\Exception $e) {
-      //Message Error
-      $status = 500;
-      $response = [
-        "errors" => $e->getMessage()
-      ];
+        $this->slide = $slide;
+         $this->auth = app(Authentication::class);
     }
 
-    return response()->json($response, $status ?? 200);
-  }
-
     /**
-     * Show slide by id
-     * @param  $id
-     * @return JsonResponse
-     */
-  public function show($id): JsonResponse
-  {
-    try {
-      //Get Parameters from URL.
-      $p = $this->parametersUrl(false, false, false, []);
+    * Get listing of the resource
+    *
+    * @return JsonResponse
+    */
+    public function index(Request $request): JsonResponse
+    {
+        try {
 
-      //Request to Repository
-      $slider = $this->slideApi->show($id,$p->include);
+          $params = $this->getParamsRequest($request);
 
-      //Response
-      $response = [
-        "data" => is_null($slider) ?
-          false : SliderApiTransformer::collection($slider)
-      ];
-    } catch (\Exception $e) {
-      //Message Error
-      $status = 500;
-      $response = [
-        "errors" => $e->getMessage()
-      ];
+          $slides = $this->slide->getItemsBy($params);
+
+          $response = ["data" => SlideTransformer::collection($slides)];
+
+          $params->page ? $response["meta"] = ["page" => $this->pageTransformer($slides)] : false;
+
+        } catch (Exception $e) {
+
+            \Log::Error($e);
+            $status = $this->getStatusError($e->getCode());
+            $response = ["error" => $e->getMessage()];
+
+        }
+
+        return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
+    }
+    /**
+    * Show resource item.
+    * @param Slide $slide
+    * @return JsonResponse
+    */
+    public function show(Slide $slide): JsonResponse
+    {
+        try {
+
+          $response = ["data" => new SlideTransformer($slide)];
+
+        } catch (Exception $e) {
+
+            \Log::Error($e);
+            $status = $this->getStatusError($e->getCode());
+            $response = ["errors" => $e->getMessage()];
+
+        }
+
+        return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
-    return response()->json($response, $status ?? 200);
-  }
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param Request $request
+    * @return JsonResponse
+    */
+    public function store(CreateSlideRequest $request): JsonResponse
+    {
+        \DB::beginTransaction();
+
+        try {
+            $data = $request->all();
+            $slide = $this->slide->create($data);
+
+            $response = ["data" => new SlideTransformer($slide)];
+
+            \DB::commit();
+
+        } catch (Exception $e) {
+
+            \Log::Error($e);
+            \DB::rollback();
+            $status = $this->getStatusError($e->getCode());
+            $response = ["errors" => $e->getMessage()];
+
+        }
+
+        return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
+
+    }
+
+    /**
+    * Update the specified resource in storage..
+    *
+    * @param  Slide $slide
+    * @param  UpdateSlideRequest $request
+    * @return JsonResponse
+    */
+    public function update(Slide $slide, UpdateSlideRequest $request): JsonResponse
+    {
+        \DB::beginTransaction();
+
+        try {
+
+            $this->slide->update($slide, $request->all());
+
+            $response = ["data" => trans('core::core.messages.resource updated', ['name' => trans('slider::slides.title.slides')])];
+
+            \DB::commit();
+
+        } catch (Exception $e) {
+
+            \Log::Error($e);
+            \DB::rollback();
+            $status = $this->getStatusError($e->getCode());
+            $response = ["errors" => $e->getMessage()];
+
+        }
+
+        return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
+
+    }
+
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param  Slide $slide
+    * @return JsonResponse
+    */
+    public function destroy(Slide $slide): JsonResponse
+    {
+        \DB::beginTransaction();
+
+        try {
+            $this->slide->destroy($slide);
+
+            $response = ["data" => trans('core::core.messages.resource deleted', ['name' => trans('slider::slides.title.slides')])];
+
+            \DB::commit();
+
+        } catch (Exception $e) {
+
+            \Log::Error($e);
+            \DB::rollback();
+            $status = $this->getStatusError($e->getCode());
+            $response = ["errors" => $e->getMessage()];
+
+        }
+
+        return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
+
+    }
 }

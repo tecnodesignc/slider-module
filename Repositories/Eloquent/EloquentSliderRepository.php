@@ -13,6 +13,19 @@ use Modules\Slider\Repositories\SliderRepository;
 class EloquentSliderRepository extends EloquentBaseRepository implements SliderRepository
 {
 
+
+    /**
+     * @param int $id
+     * @return Model|Collection|Builder|array|null
+     */
+    public function find(int $id): Model|Collection|Builder|array|null
+    {
+        if (method_exists($this->model, 'translations')) {
+            return $this->model->with('translations')->find($id);
+        }
+        return $this->model->with('slides')->find($id);
+    }
+
     /**
      * Create a resource
      * @param  $data
@@ -24,6 +37,7 @@ class EloquentSliderRepository extends EloquentBaseRepository implements SliderR
 
         return $slider;
     }
+
     /**
      * Update a resource
      * @param  $model
@@ -62,7 +76,7 @@ class EloquentSliderRepository extends EloquentBaseRepository implements SliderR
      * @param string $systemName
      * @return Model|Collection|Builder|array|null
      */
-    public function findBySystemName(string $systemName):Model|Collection|Builder|array|null
+    public function findBySystemName(string $systemName): Model|Collection|Builder|array|null
     {
         return $this->model->where('system_name', '=', $systemName)->first();
     }

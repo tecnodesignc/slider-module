@@ -1,5 +1,8 @@
 url: https://github.com/tecnodesignc/slider-module
 versions:
+  "3.0.0":
+    changed:
+      - Laravel 10 compatibility
   "2.0.0":
     changed:
       - Laravel 9 compatibility

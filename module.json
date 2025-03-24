@@ -9,7 +9,7 @@
     "EncoreCMS",
     "Slides"
   ],
-  "version": "2.0.0",
+  "version": "3.0.0",
   "active": 1,
   "priority": 1,
   "providers": [
@@ -20,5 +20,5 @@
     "Slider": "Modules\\Slider\\Facades\\SliderFacade"
   },
   "files": [],
-  "minimumCoreVersion": "2.0"
+  "minimumCoreVersion": "3.0"
 }
